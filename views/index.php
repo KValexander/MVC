@@ -6,9 +6,10 @@
 		echo "
 			<tr>
 				<td>". $value["name"] ."</td>
+				<td>". $value["genre"] ."</td>
+				<td>". $value["years"] ."</td>
 				<td>". $value["country"] ."</td>
-				<td>". $value["date"] ."</td>
-				<td>". $value["style"] ."</td>
+				<td>". $value["type"] ."</td>
 			</tr>
 		";
 	}

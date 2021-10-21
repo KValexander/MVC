@@ -18,7 +18,7 @@
 	// Server
 	$server = new Server();
 	// Connect to database
-	DB::connect("localhost", "root", "root", "db_music");
+	DB::connect("localhost", "root", "root", "music");
 
 	// Check and processing route in case of availability
 	if(!$server->search_route($_SERVER["REQUEST_URI"]))

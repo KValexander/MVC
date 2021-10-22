@@ -1,17 +1,25 @@
 <?php
 class Model {
-	// Private variables
+	// Public variables
 	public $table = "";
 	public $primaryKey = "";
-	private $find_id = "";
+	private $id = "";
+
+	// Set id
+	public function set_id($id) {
+		$this->id = $id;
+	}
 
 	// Get one table value
-	public function find($id) {
-		$sql = sprintf("SELECT * FROM `%s` WHERE `%s`='%s'", $this->table, $this->primaryKey, $id);
+	public function find($id=0) {
+		// ID definition
+		if(!$id && !$this->$id) $value = $this->id;
+		else $value = $id;
+
+		$sql = sprintf("SELECT * FROM `%s` WHERE `%s`='%s'", $this->table, $this->primaryKey, $value);
 		$result = DB::query($sql);
 		if(!$result) return [];
 		$assoc = $result->fetch_assoc();
-		$this->find_id = $assoc[$this->primaryKey];
 		return $assoc;
 	}
 
@@ -51,7 +59,7 @@ class Model {
 	// Deleting data
 	public function delete($id="") {
 		// ID definition
-		if(!$id && !$this->$find_id) $value = $this->find_id;
+		if(!$id && !$this->$id) $value = $this->id;
 		else $value = $id;
 
 		// Removing data from the database
@@ -63,7 +71,7 @@ class Model {
 	// Updating data
 	public function update($array, $id="") {
 		// ID definition
-		if(!$id && !$this->$find_id) $value = $this->find_id;
+		if(!$id && !$this->$id) $value = $this->id;
 		else $value = $id;
 
 		// Configuration

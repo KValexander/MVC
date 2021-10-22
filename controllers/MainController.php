@@ -4,18 +4,23 @@ class MainController {
 	// Main page
 	public function main_page() {
 		$team = new TeamModel();
+		$id = 1;
+
+		// Set id
+		$team->set_id($id);
 
 		// Get one table value
-		// $tt = $team->find(3);
+		$tt = $team->find();
+		// $tt = $team->find($id);
 
 		// Deleting data
-		// $delete = $team->delete();
-		$delete = $team->delete(3);
+		$delete = $team->delete();
+		// $delete = $team->delete($id);
  		if(!$delete) echo DB::$connect->error;
 
 		// Adding data
 		$insert = $team->add([
-			"team_id" => 3,
+			"team_id" => $id,
 			"name" => "Name",
 			"genre" => "Genre",
 			"years" => 1999,
@@ -30,8 +35,8 @@ class MainController {
 			"years" => 2020,
 			"country" => "Updating Contry",
 			"type" => "Updating team"
-		], 3); if(!$update) echo DB::$connect->error;
-		// ]);
+		// ], $id); if(!$update) echo DB::$connect->error;
+		]); if(!$update) echo DB::$connect->error;
 
 		// Calling the view and passing all the table data to it
 		return view("index", ["data" => $team->all()]);

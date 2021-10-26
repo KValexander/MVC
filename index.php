@@ -7,6 +7,7 @@
 
 	// Helpers include
 	include "helpers/view.php";
+	include "helpers/response.php";
 
 	// Models include
 	$files = scandir("models"); unset($files[0]); unset($files[1]);

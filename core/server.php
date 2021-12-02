@@ -1,10 +1,18 @@
 <?php
 class Server {
 
+	// Constructor
+	public function __construct() {
+		// Connect to database
+		DB::connect(LOCALHOST, USERNAME, PASSWORD, DBNAME);
+	}
+
 	// Search route
 	public function search_route($path) {
 		if($value = Router::search($path, $_SERVER["REQUEST_METHOD"])) {
-			$this->route_processing(explode("@", $value));
+			// If passed function
+			if (is_callable($value)) $value();
+			else $this->route_processing(explode("@", $value));
 			return true;
 		} else return false;
 	}

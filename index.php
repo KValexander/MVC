@@ -6,9 +6,9 @@
 	include "core/model.php";
 
 	// Helpers include
-	include "helpers/view.php";
-	include "helpers/response.php";
-	include "helpers/include.php";
+	include "core/helpers/view.php";
+	include "core/helpers/response.php";
+	include "core/helpers/include.php";
 
 	// Models include
 	include_files("models/");
@@ -16,13 +16,18 @@
 	// Others include
 	include "routes.php";
 
+	// Data for connecting to the base
+	define("LOCALHOST", "");
+	define("USERNAME", 	"");
+	define("PASSWORD", 	"");
+	define("DBNAME", 	"");
+
 	// Server
 	$server = new Server();
-	// Connect to database
-	DB::connect("localhost", "root", "root", "music");
 
 	// Check and processing route in case of availability
-	if(!$server->search_route($_SERVER["REQUEST_URI"]))
-		echo "Route not found";
+	if(!$server->search_route($_SERVER["REDIRECT_URL"]))
+		echo "<h1>This path doesn't exist</h1>";
+		// or return view("404"); in view
 
 ?>

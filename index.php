@@ -1,14 +1,9 @@
 <?php
-	// Core include
-	include "core/server.php";
-	include "core/database.php";
-	include "core/router.php";
-	include "core/model.php";
-
-	// Helpers include
-	include "core/helpers/view.php";
-	include "core/helpers/response.php";
+	// Include include
 	include "core/helpers/include.php";
+
+	// Core and helpers include
+	include_files("core/");
 
 	// Models include
 	include_files("models/");
@@ -26,7 +21,7 @@
 	$server = new Server();
 
 	// Check and processing route in case of availability
-	if(!$server->search_route($_SERVER["REDIRECT_URL"]))
+	if(!$server->search_route($_SERVER["REQUEST_URI"]))
 		echo "<h1>This path doesn't exist</h1>";
 		// or return view("404"); in view
 

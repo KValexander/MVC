@@ -9,6 +9,7 @@ class Server {
 
 	// Search route
 	public function search_route($path) {
+		$path = explode("?", $path)[0];
 		if($value = Router::search($path, $_SERVER["REQUEST_METHOD"])) {
 			// If passed function
 			if (is_callable($value)) $value();

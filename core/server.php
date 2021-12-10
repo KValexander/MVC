@@ -1,12 +1,6 @@
 <?php
 class Server {
 
-	// Constructor
-	public function __construct() {
-		// Connect to database
-		DB::connect(LOCALHOST, USERNAME, PASSWORD, DBNAME);
-	}
-
 	// Search route
 	public function search_route($path) {
 		$path = explode("?", $path)[0];

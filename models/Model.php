@@ -1,9 +1,16 @@
 <?php
 class Model {
-	// Public variables
-	public $table = "";
-	public $primaryKey = "";
-	private $id = "";
+	// Protected
+	protected $table;
+	protected $primaryKey;
+	// Private
+	private $db;
+	private $id;
+
+	// Constructor
+	function __construct() {
+		$this->db = new Database(HOST, USERNAME, PASSWORD, DBNAME);
+	}
 
 	// Set id
 	public function set_id($id) {
@@ -17,7 +24,7 @@ class Model {
 		else $value = $id;
 
 		$sql = sprintf("SELECT * FROM `%s` WHERE `%s`='%s'", $this->table, $this->primaryKey, $value);
-		$result = DB::query($sql);
+		$result = $this->db->query($sql);
 		if(!$result) return [];
 		$assoc = $result->fetch_assoc();
 		return $assoc;
@@ -26,7 +33,7 @@ class Model {
 	// Get all table values
 	public function all() {
 		$sql = sprintf("SELECT * FROM `%s`", $this->table);
-		$result = DB::query($sql);
+		$result = $this->db->query($sql);
 		if(!$result) return [];
 		$data = []; while($row = $result->fetch_assoc()) $data[] = $row;
 		return $data;
@@ -52,7 +59,7 @@ class Model {
 
 		// Adding data to the database
 		$sql = sprintf("INSERT INTO `%s`(%s) VALUES(%s)", $this->table, $keys, $values);
-		if(DB::query($sql)) return true;
+		if($this->db->query($sql)) return true;
 		else return false;
 	}
 
@@ -64,7 +71,7 @@ class Model {
 
 		// Removing data from the database
 		$sql = sprintf("DELETE FROM `%s` WHERE `%s`='%s'", $this->table, $this->primaryKey, $value);
-		if(DB::query($sql)) return true;
+		if($this->db->query($sql)) return true;
 		else return false;
 	}
 
@@ -87,8 +94,18 @@ class Model {
 
 		// Updating data in the database
 		$sql = sprintf("UPDATE `%s` SET %s WHERE `%s`='%s'", $this->table, $values, $this->primaryKey, $value);
-		if(DB::query($sql)) return true;
+		if($this->db->query($sql)) return true;
 		else return false;
+	}
+
+	// Error message output
+	public function error() {
+		return $this->db->error();
+	}
+
+	// Destructor
+	function __destruct() {
+		unset($this->db);
 	}
 
 }

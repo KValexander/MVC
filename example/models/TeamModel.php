@@ -3,8 +3,8 @@
 class TeamModel extends Model {
 
 	// Values for referring to the table
-	public $table = "team";
-	public $primaryKey = "team_id";
+	protected $table = "team";
+	protected $primaryKey = "team_id";
 
 }
 ?>

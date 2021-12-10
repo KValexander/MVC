@@ -1,5 +1,5 @@
 <?php
-	// Starting route
+	// Start page
 	Router::get("/", function() {
 		return view("welcome");
 	});

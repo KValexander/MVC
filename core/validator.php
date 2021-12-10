@@ -1,6 +1,12 @@
 <?php
 // Validator
 class Validator {
+	private $db;
+
+	// Constructor
+	function __construct($db) {
+		$this->db = $db;
+	}
 
 	// Validate data
 	public function make($data, $arr) {
@@ -72,7 +78,7 @@ class Validator {
 					case preg_match("/unique:/", $val) == true:
 						$unique = explode(":", $val);
 						$unique = explode(",", $unique[1]);
-						$availability = DB::query(sprintf("SELECT `%s` FROM `%s` WHERE `%s`='%s'", $unique[1], $unique[0], $unique[1],$data[$key]))->fetch_assoc();
+						$availability = $this->db->result(sprintf("SELECT `%s` FROM `%s` WHERE `%s`='%s'", $unique[1], $unique[0], $unique[1],$data[$key]))->first();
 						if ($availability != NULL) $errors->errors[$key] = "Такое значение уже есть в нашей базе";
 					break;
 

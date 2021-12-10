@@ -8,14 +8,17 @@
 	// Models include
 	include_files("models/");
 
+	// Include class Controller
+	include "controllers/Controller.php";
+
 	// Others include
 	include "routes.php";
 
 	// Data for connecting to the base
-	define("LOCALHOST", "");
-	define("USERNAME", 	"");
-	define("PASSWORD", 	"");
-	define("DBNAME", 	"");
+	define("HOST", 		"localhost");
+	define("USERNAME", 	"root");
+	define("PASSWORD", 	"root");
+	define("DBNAME", 	"music");
 
 	// Server
 	$server = new Server();

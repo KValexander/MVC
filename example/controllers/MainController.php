@@ -1,10 +1,12 @@
 <?php
-class MainController {
+class MainController extends Controller {
 
 	// Main page
 	public function main_page() {
 		$team = new TeamModel();
 		$id = 1;
+
+		var_dump($this->validator);
 
 		// Set id
 		$team->set_id($id);
@@ -16,7 +18,7 @@ class MainController {
 		// Deleting data
 		$delete = $team->delete();
 		// $delete = $team->delete($id);
- 		if(!$delete) echo DB::$connect->error;
+ 		if(!$delete) echo $team->error();
 
 		// Adding data
 		$insert = $team->add([
@@ -26,7 +28,7 @@ class MainController {
 			"years" => 1999,
 			"country" => "Contry",
 			"type" => "team"
-		]); if(!$insert) echo DB::$connect->error;
+		]); if(!$insert) echo $team->error();
 
 		// Updating data
 		$update = $team->update([
@@ -36,7 +38,7 @@ class MainController {
 			"country" => "Updating Contry",
 			"type" => "Updating team"
 		// ], $id); if(!$update) echo DB::$connect->error;
-		]); if(!$update) echo DB::$connect->error;
+		]); if(!$update) echo $team->error();
 
 		// Calling the view and passing all the table data to it
 		return view("index", ["data" => $team->all()]);

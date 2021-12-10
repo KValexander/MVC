@@ -15,10 +15,10 @@
 	include "routes.php";
 
 	// Data for connecting to the base
-	define("HOST", 		"localhost");
-	define("USERNAME", 	"root");
-	define("PASSWORD", 	"root");
-	define("DBNAME", 	"music");
+	define("HOST", 		"");
+	define("USERNAME", 	"");
+	define("PASSWORD", 	"");
+	define("DBNAME", 	"");
 
 	// Server
 	$server = new Server();

@@ -15,6 +15,7 @@ class Router {
 
 	// Search route
 	public static function search($path, $type) {
+		if(count(self::$routes) == 0) return false;
 		if(array_key_exists($path, self::$routes[$type])) {
 			return self::$routes[$type][$path];
 		} else return false;

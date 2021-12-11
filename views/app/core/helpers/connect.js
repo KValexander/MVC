@@ -22,7 +22,6 @@ let connect = {
 	check: function(path) {
 		connect.xhr.open("GET", path, false);
 		connect.xhr.send();
-		return connect.xhr.status == 200;
-		// return !connect.xhr.responseText.includes("<!DOCTYPE html>");
+		return xhr_check(connect.xhr.responseText);
 	}
 }

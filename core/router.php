@@ -5,11 +5,13 @@ class Router {
 
 	// Add GET route
 	public static function get($path, $value) {
+		$path = slash_check($path);
 		self::$routes["GET"][$path] = $value;
 	}
 
 	// Add POST route
 	public static function post($path, $values) {
+		$path = slash_check($path);
 		self::$routes["POST"][$path] = $values;
 	}
 

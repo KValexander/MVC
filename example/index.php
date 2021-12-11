@@ -1,7 +1,11 @@
 <?php
+	// Constants
 	define('APP_ROOT', $_SERVER['DOCUMENT_ROOT'] . '/');
 	define('APP_DOMEN', $_SERVER['REQUEST_SCHEME']. '://' .$_SERVER['HTTP_HOST'] . '/');
-	
+
+	// Headers
+	header("Access-Control-Allow-Origin: *");
+
 	// Include include
 	include "core/helpers/include.php";
 
@@ -18,10 +22,10 @@
 	include "routes.php";
 
 	// Data for connecting to the base
-	define("HOST", 		"");
-	define("USERNAME", 	"");
-	define("PASSWORD", 	"");
-	define("DBNAME", 	"");
+	define("HOST", 		"localhost");
+	define("USERNAME", 	"root");
+	define("PASSWORD", 	"root");
+	define("DBNAME", 	"music");
 
 	// Server
 	$server = new Server();

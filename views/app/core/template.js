@@ -17,13 +17,15 @@ app.template = {
 		app.template.values[key] = val;
 	},
 	// Parsing a template
-	parse: function() {
+	parse_template: function() {
 		for (let key in app.template.values)
-			app.template.html = app.template.html.replace(key, app.template.values[key])
+			if (app.template.html.includes(key))
+				app.template.html = app.template.html.replace(key, app.template.values[key]);
+		app.template.html = app.template.html.replace(/\{.*?\}/g, '');
 	},
 	// Retrieving processed template data
-	receive: function() {
-		app.template.parse();
+	get_content: function() {
+		app.template.parse_template();
 		html = app.template.html;
 		app.template.clear();
 		return html;

@@ -1,4 +1,5 @@
 <?php
+	// Sending a response
 	function response($status, $data=NULL) {
 		header("HTTP/1.1 ".$status);
 		$response["status"] = $status;
@@ -6,4 +7,3 @@
 		$json_response = json_encode($response);
 		echo $json_response;
 	}
-?>

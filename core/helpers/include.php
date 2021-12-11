@@ -11,4 +11,3 @@
 			else include_files($path . $file. "/");
 		}
 	}
-?>

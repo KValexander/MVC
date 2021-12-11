@@ -13,4 +13,3 @@ function view($view, $args=[]) {
 	// Connecting a view
 	include "views/".$view.".php";
 }
-?>

@@ -17,7 +17,6 @@ class Controller {
 		unset($this->db);
 		unset($this->request);
 		unset($this->validator);
-		unset($this->tpl);
 	}
 
 }

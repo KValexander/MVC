@@ -1,4 +1,7 @@
 <?php
+	define('APP_ROOT', $_SERVER['DOCUMENT_ROOT'] . '/');
+	define('APP_DOMEN', $_SERVER['REQUEST_SCHEME']. '://' .$_SERVER['HTTP_HOST'] . '/');
+	
 	// Include include
 	include "core/helpers/include.php";
 

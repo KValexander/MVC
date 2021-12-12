@@ -56,7 +56,7 @@ class Router {
 					// Writing keys and values to an array
 					unset(self::$routes[$type][$key]);
 					foreach($values as $index => $value) {
-						Request::$routes[preg_replace("#{|}#", "", $keys[$index])] = $value;
+						Request::add_route(preg_replace("#{|}#", "", $keys[$index]), $value);
 						$key = str_replace($keys[$index], $value, $key);
 					}
 					self::$routes[$type][$key] = $val;

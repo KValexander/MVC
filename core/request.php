@@ -1,7 +1,7 @@
 <?php
 // Working with the received data
 class Request {
-	public static $routes = array();
+	private static $routes = array();
 
 	// Data retrieval method
 	private function get_data() {
@@ -10,6 +10,11 @@ class Request {
 			$array = json_decode($data, true);
 		} else $array = array_merge($_REQUEST, $_FILES);
 		return $array;
+	}
+
+	// Add route
+	public static function add_route($key, $value) {
+		self::$routes[$key] = $value;
 	}
 
 	// Returns all data

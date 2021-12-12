@@ -13,7 +13,15 @@ app.route.search = (route) => {
 	if(result = app.route.routes[route]) {
 		app.route.change_url(route);
 		app.route.call(result.split("@"));
-	}
+	} else app.route.not_found();
+}
+
+// Displaying a message if there is no route
+app.route.not_found = () => {
+	app.template.get_template("error");
+	app.template.set_value("ERROR", "Error 404");
+	app.template.set_value("MESSAGE", "Page not found");
+	app.html.innerHTML = app.template.get_content();
 }
 
 window.addEventListener("popstate", e => app.route.current_url());

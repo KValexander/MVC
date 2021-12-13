@@ -37,7 +37,7 @@ app.controllers.main = {
 		html = app.template.get_content();
 
 		app.html.content.innerHTML = `
-			<h1 class="head">Side page</h1>
+			<h1 class="head">Side page (${app.route.var.page})</h1>
 			${html}
 		`;
 	}

@@ -19,23 +19,22 @@ class Router {
 	public static function search($path, $type) {
 		if(count(self::$routes) == 0) return false;
 
-		// Route processing
-		self::route_processing($path, $type);
-
 		// Checking for route availability
-		if(array_key_exists($path, self::$routes[$type])) {
-			return self::$routes[$type][$path];
+		if($result = self::route_processing($path, $type)) {
+			return $result;
 		} else return false;
 	}
 
 	// Route processing
 	private static function route_processing($path, $type) {
+		// Simple coincidence
+		if (array_key_exists($path, self::$routes[$type]))
+			return self::$routes[$type][$path];
+
 		// Checking for the existence of variables in a route
 		// Part 1
 		$val_path = explode("/", $path);
 		foreach(self::$routes[$type] as $key => $val) {
-
-			// Part 2
 			$count_var = preg_match_all("#{.*?}#", $key);
 			$val_key = explode("/", $key);
 			if ($count_var > 0 && count($val_path) == count($val_key)) {
@@ -45,24 +44,17 @@ class Router {
 				if (preg_match($pattern, $path)) {
 
 					// Retrieving values and keys of route variables
-					$keys = []; $values = [];
-					for($i = 0; $i < count($val_path); $i++) {
-						if(preg_match("/\{.*?\}/", $val_key[$i])) {
-							$keys[] = $val_key[$i]; $values[] = $val_path[$i];
-						}
-					}
+					for($i = 0; $i < count($val_path); $i++)
+						if(preg_match("/\{.*?\}/", $val_key[$i]))
+							Request::add_route(preg_replace("#{|}#", "", $val_key[$i]), $val_path[$i]);
 
-					// Replacing route variables with values and
-					// Writing keys and values to an array
-					unset(self::$routes[$type][$key]);
-					foreach($values as $index => $value) {
-						Request::add_route(preg_replace("#{|}#", "", $keys[$index]), $value);
-						$key = str_replace($keys[$index], $value, $key);
-					}
-					self::$routes[$type][$key] = $val;
+					// Returning result
+					return $val;
 				}
 			}
 		}
+		
+		return false;
 	}
 }
 ?>

@@ -16,7 +16,7 @@ app.template = {
 		} else app.template.html = "<h1>Template not found</h1>";
 	},
 	// Retrieving values for a template
-	set_value: function(keys, val) {
+	set_value: function(keys, val=null) {
 		// If passed an object
 		if(typeof keys === "object") {
 			for(k in keys) {

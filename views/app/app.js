@@ -23,8 +23,10 @@ let app = {
 	controllers: {}, // controller scripts
 	// Route object
 	route: {
-		// Routes object
+		// Routes
 		routes: {},
+		// Route variables
+		var: {},
 		// Method for adding routes
 		add_route: (route, controller) => {
 			route = slash_check(route);

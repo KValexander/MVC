@@ -28,9 +28,17 @@ app.controllers.main = {
 
 	// Side page
 	side_page: function() {
+		array = ["This text", "consists of", "three blocks"];
+		app.template.get_template("content", array.length);
+		for(let i = 0; i < array.length; i++) {
+			app.template.set_value("CONTENT", `<h2>${array[i]}</h2><br>`);
+			app.template.get_content();
+		}
+		html = app.template.get_content();
+
 		app.html.content.innerHTML = `
 			<h1 class="head">Side page</h1>
-			<h2>No content</h2>
+			${html}
 		`;
 	}
 }

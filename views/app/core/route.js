@@ -22,8 +22,10 @@ app.route.search = (route) => {
 // Displaying a message if there is no route
 app.route.not_found = () => {
 	app.template.get_template("error");
-	app.template.set_value("ERROR", "Error 404");
-	app.template.set_value("MESSAGE", "Page not found");
+	app.template.set_value({
+		"ERROR": "Error 404",
+		"MESSAGE": "Page not found"
+	});
 	app.html.content.innerHTML = app.template.get_content();
 }
 

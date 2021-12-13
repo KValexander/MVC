@@ -31,9 +31,11 @@ app.config = {
 
 		// Getting a header
 		app.template.get_template("layout/header");
-		app.template.set_value("SRC", app.config.logo);
-		app.template.set_value("TITLE", app.config.title);
-		app.template.set_value("LINKS", app.config.menu.get());
+		app.template.set_value({
+			"SRC": app.config.logo,
+			"TITLE": app.config.title,
+			"LINKS": app.config.menu.get()
+		});
 		header = app.template.get_content();
 
 		// Getting a layout

@@ -12,6 +12,7 @@
 <body>
 
 	<div id="app"></div>
+	<div id="other"></div>
 	
 </body>
 </html>

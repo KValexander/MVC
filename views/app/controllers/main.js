@@ -19,7 +19,7 @@ app.controllers.main = {
 
 				// Out data
 				app.html.content.innerHTML = app.template.get_content();
-		
+
 			}, "/api/main/1");
 		
 		}, "/api/main");
@@ -33,8 +33,7 @@ app.controllers.main = {
 		for(let i = 0; i < array.length; i++) {
 			app.template.set_value("CONTENT", `<h2>${array[i]}</h2><br>`);
 			app.template.get_content();
-		}
-		html = app.template.get_content();
+		} html = app.template.get_content();
 
 		app.html.content.innerHTML = `
 			<h1 class="head">Side page (${app.route.var.page})</h1>

@@ -3,27 +3,26 @@
 class Parser {
 	private $url = "";
 	private $html = "";
-	private $wrap = "";
 	private $content = "";
 
 	// Getting site content
-	public function get_url($url) {
+	public function url($url) {
 		$this->url = $url;
 		$this->html = file_get_contents($this->url);
-		return $this->html;
+		return $this;
 	}
 
 	// Getting content wrapper
-	public function get_wrap($reg, $html=NULL) {
+	public function wrap($reg, $html=NULL) {
 		if($html == NULL) preg_match_all("#$reg#su", $this->html, $result, PREG_PATTERN_ORDER);
 		else preg_match_all("#$reg#su", $html, $result, PREG_PATTERN_ORDER);
 
 		$this->wrap = $result[0][0];
-		return $this->wrap;
+		return $this;
 	}
 
 	// Getting content from the wrapper
-	public function get_content($reg, $wrap=NULL) {
+	public function content($reg, $wrap=NULL) {
 		if($wrap == NULL) preg_match_all("#$reg#su", $this->wrap, $result, PREG_PATTERN_ORDER);
 		else preg_match_all("#$reg#su", $wrap, $result, PREG_PATTERN_ORDER);
 
@@ -35,15 +34,13 @@ class Parser {
 		}
 
 		$this->content = $res;
-		return $res;
+		return $this;
 	}
 
-	public function get_tag() {
-
-	}
-
-	public function get_link() {
-
+	// Get data
+	public function get() {
+		if ($this->content != "") return $this->html;
+		return $this->content;
 	}
 
 }

@@ -2,6 +2,7 @@
 const root = "views/app/";
 window.onload = () => {
 	app.html.app = document.getElementById("app");
+	app.html.other = document.getElementById("other");
 	app.route.current_url();
 }
 
@@ -10,12 +11,13 @@ connect.style(`${root}style/style.css`);
 
 // Including core scripts
 connect.script([
-	`${root}menu.js`,
 	`${root}core/template.js`,
 	`${root}core/request.js`,
 	`${root}core/config.js`,
 	`${root}core/route.js`,
+	`${root}core/popup.js`,
 	`${root}routes.js`,
+	`${root}menu.js`,
 ]);
 
 // Application object

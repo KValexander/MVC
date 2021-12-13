@@ -10,17 +10,22 @@ connect.style(`${root}style/style.css`);
 
 // Including core scripts
 connect.script([
-	`${root}routes.js`,
+	`${root}menu.js`,
 	`${root}core/template.js`,
 	`${root}core/request.js`,
 	`${root}core/config.js`,
 	`${root}core/route.js`,
+	`${root}routes.js`,
 ]);
 
 // Application object
 let app = {
 	html: {}, // object with output elements
 	controllers: {}, // controller scripts
+	// config object
+	config: {
+		menu: {} // site menu
+	},
 	// Route object
 	route: {
 		// Routes

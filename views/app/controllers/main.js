@@ -40,5 +40,5 @@ app.controllers.main = {
 			<h1 class="head">Side page (${app.route.var.page})</h1>
 			${html}
 		`;
-	}
+	},
 }

@@ -1,7 +1,7 @@
 <?php
 	// Api route
 	Router::get("/api/main", function() {
-		return response(200, "It's work!");
+		return response(200, "Home page");
 	});
 
 	Router::get("/api/main/{id}", function() {

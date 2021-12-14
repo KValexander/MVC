@@ -5,12 +5,10 @@ app.controllers.main = {
 
 		// Get request
 		app.request.get(data => {
-			data = JSON.parse(data);
 			content = `<h1 class="head">${data.data}</h1>`;
 
 			// Get request
 			app.request.get(data => {
-				data = JSON.parse(data);
 				content += `<h2>${data.data}</h2>`;
 
 				// Get template

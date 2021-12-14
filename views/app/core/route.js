@@ -12,6 +12,7 @@ app.route.call = (params) => eval(`app.controllers.${params[0]}.${params[1]}()`)
 
 // Search method for the desired route
 app.route.search = (route) => {
+	if(route == "") return;
 	route = slash_check(route);
 	app.route.change_url(route);
 	if(params = app.route.processing(route)) {

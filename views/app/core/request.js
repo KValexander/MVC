@@ -16,7 +16,7 @@ app.request = {
 		xhr.send(data);
 		xhr.onreadystatechange = function() {
 			if(xhr.readyState != 4) return;
-			callback(xhr.responseText);
+			callback(JSON.parse(xhr.responseText));
 		}
 	},
 	// Method for sending post requests
@@ -27,7 +27,7 @@ app.request = {
 		xhr.send(data);
 		xhr.onreadystatechange = function() {
 			if(xhr.readyState != 4) return;
-			callback(xhr.responseText);
+			callback(JSON.parse(xhr.responseText));
 		}
 
 	}

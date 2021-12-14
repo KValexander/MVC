@@ -19,7 +19,7 @@ class Database {
 
 	// Connection to base
 	function __construct($dbhost, $dbuser, $dbpass, $dbname) {
-		if($dbhost == "" || $dbuser == "" || $dbname == "") return $this->connect_error();
+		if($dbhost == "" || $dbuser == "" || $dbname == "") return;
 
 		$this->connect = null;
 		$this->connect = new mysqli($dbhost, $dbuser, $dbpass, $dbname);

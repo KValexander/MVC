@@ -3,7 +3,9 @@
 class Parser {
 	private $url = "";
 	private $html = "";
-	private $content = "";
+	private $wrap = array();
+	private $content = array();
+	private $n = NULL;
 
 	// Getting site content
 	public function url($url) {
@@ -12,36 +14,51 @@ class Parser {
 		return $this;
 	}
 
-	// Getting content wrapper
-	public function wrap($reg, $html=NULL) {
-		if($html == NULL) preg_match_all("#$reg#su", $this->html, $result, PREG_PATTERN_ORDER);
-		else preg_match_all("#$reg#su", $html, $result, PREG_PATTERN_ORDER);
-
-		$this->wrap = $result[0][0];
+	// Getting the content of a specific wrapper
+	public function wrap($tag, $attr, $value, $n=NULL) {
+		$this->n = $n;
+		preg_match_all("#<$tag $attr=(\"|')$value(\"|')>(.*?)</$tag>#su", $this->html, $result, PREG_PATTERN_ORDER);
+		if ($n === NULL) $this->wrap = $result[0];
+		else $this->wrap = $result[0][$n];
 		return $this;
 	}
 
-	// Getting content from the wrapper
-	public function content($reg, $wrap=NULL) {
-		if($wrap == NULL) preg_match_all("#$reg#su", $this->wrap, $result, PREG_PATTERN_ORDER);
-		else preg_match_all("#$reg#su", $wrap, $result, PREG_PATTERN_ORDER);
+	// Getting links from a wrapper
+	public function link($attr="href") {
+		if($this->n === NULL) foreach($this->wrap as $key => $val) $this->link_processing($attr, $key, $val);
+		else $this->link_processing($attr, $this->n, $this->wrap);
+		return $this;
+	}
 
-		$res = [];
-		foreach($result[0] as $key => $val) {
-			preg_match_all("#<.*?>.*?</.*?>#su", $val, $tags, PREG_PATTERN_ORDER);
-			foreach($tags[0] as $value)
-				$res[$key][] = trim(strip_tags($value));
+	// Getting content from a wrapper
+	public function content($tag, $attr, $value) {
+		if($this->n === NULL) foreach($this->wrap as $key => $val) $this->content_processing($tag, $attr, $value, $key, $val);
+		else $this->content_processing($tag, $attr, $value, $this->n, $this->wrap);
+		return $this;
+	}
+
+	// Link processing
+	private function link_processing($attr, $key, $val) {
+		preg_match_all("#$attr=(\"|')(.*?)(\"|')#su", $val, $result, PREG_PATTERN_ORDER);
+		foreach($result[0] as $k => $v)
+			$this->content[$key][$k][] = preg_replace("/(\"|\')/", "", preg_split("#$attr=#", $v)[1]);
+	}
+
+	// Content processing
+	private function content_processing($tag, $attr, $value, $key, $val) {
+		preg_match_all("#<$tag $attr=(\"|')$value(\"|')>(.*?)</$tag>#su", $val, $result, PREG_PATTERN_ORDER);
+		foreach($result[0] as $k => $v) {
+			preg_match_all("#<.*?>.*?</.*?>#su", $v, $tags, PREG_PATTERN_ORDER);
+			foreach($tags[0] as $c)
+				if(trim(strip_tags($c)) != "")
+					$this->content[$key][$k][] = trim(strip_tags($c));
 		}
-
-		$this->content = $res;
-		return $this;
 	}
 
-	// Get data
+	// Retrieving content
 	public function get() {
-		if ($this->content != "") return $this->html;
-		return $this->content;
+		if($this->n === NULL) return $this->content;
+		else return $this->content[$this->n];
 	}
-
 }
 ?>

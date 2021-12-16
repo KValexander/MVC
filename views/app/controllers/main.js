@@ -29,7 +29,7 @@ app.controllers.main = {
 		array = ["This text", "consists of", "three blocks"];
 		app.template.get_template("content", array.length);
 		for(let i = 0; i < array.length; i++) {
-			app.template.set_value("CONTENT", `<h2>${array[i]}</h2><br>`);
+			app.template.set_value("CONTENT", `<p>${array[i]}</p>`);
 			app.template.get_content();
 		} html = app.template.get_content();
 

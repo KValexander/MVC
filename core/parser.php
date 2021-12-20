@@ -55,8 +55,18 @@ class Parser {
 		}
 	}
 
-	// Retrieving content
-	public function get() {
+	// Get html
+	public function get_html() {
+		return $this->html;
+	}
+
+	// Get wrap
+	public function get_wrap() {
+		return $this->wrap;
+	}
+
+	// Get content
+	public function get_content() {
 		if($this->n === NULL) return $this->content;
 		else return $this->content[$this->n];
 	}

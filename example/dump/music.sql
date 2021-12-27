@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Окт 21 2021 г., 19:36
+-- Время создания: Дек 27 2021 г., 18:55
 -- Версия сервера: 10.3.29-MariaDB
 -- Версия PHP: 7.4.21
 
@@ -29,15 +29,17 @@ USE `music`;
 -- Структура таблицы `album`
 --
 
-CREATE TABLE `album` (
-  `album_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `album`;
+CREATE TABLE IF NOT EXISTS `album` (
+  `album_id` int(11) NOT NULL AUTO_INCREMENT,
   `team_id` int(11) DEFAULT NULL,
   `name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `year_release` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `genres` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `country` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `label` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `label` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`album_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Дамп данных таблицы `album`
@@ -54,13 +56,15 @@ INSERT INTO `album` (`album_id`, `team_id`, `name`, `year_release`, `genres`, `c
 -- Структура таблицы `composition`
 --
 
-CREATE TABLE `composition` (
-  `composition_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `composition`;
+CREATE TABLE IF NOT EXISTS `composition` (
+  `composition_id` int(11) NOT NULL AUTO_INCREMENT,
   `album_id` int(11) DEFAULT NULL,
   `team_id` int(11) DEFAULT NULL,
   `name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `length` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `length` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`composition_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Дамп данных таблицы `composition`
@@ -83,66 +87,47 @@ INSERT INTO `composition` (`composition_id`, `album_id`, `team_id`, `name`, `len
 -- Структура таблицы `team`
 --
 
-CREATE TABLE `team` (
-  `team_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `team`;
+CREATE TABLE IF NOT EXISTS `team` (
+  `team_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `genre` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `years` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `country` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `type` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `type` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`team_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Дамп данных таблицы `team`
 --
 
 INSERT INTO `team` (`team_id`, `name`, `genre`, `years`, `country`, `type`) VALUES
-(1, 'Pink Floyd', 'Прогрессивный рок, арт-рок, психоделический рок', '1965-2015', 'Великобритания', 'team'),
+(1, 'Updating Name', 'Updating Genre', '2020', 'Updating Contry', 'Updating team'),
 (2, 'The Beatles', 'Рок, поп, мерсибит, рок-н-ролл, психоделический рок, хард-рок', '1960—1970', 'Великобритания', 'team');
 
---
--- Индексы сохранённых таблиц
---
+-- --------------------------------------------------------
 
 --
--- Индексы таблицы `album`
---
-ALTER TABLE `album`
-  ADD PRIMARY KEY (`album_id`);
-
---
--- Индексы таблицы `composition`
---
-ALTER TABLE `composition`
-  ADD PRIMARY KEY (`composition_id`);
-
---
--- Индексы таблицы `team`
---
-ALTER TABLE `team`
-  ADD PRIMARY KEY (`team_id`);
-
---
--- AUTO_INCREMENT для сохранённых таблиц
+-- Структура таблицы `user`
 --
 
---
--- AUTO_INCREMENT для таблицы `album`
---
-ALTER TABLE `album`
-  MODIFY `album_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE IF NOT EXISTS `user` (
+  `user_id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `login` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- AUTO_INCREMENT для таблицы `composition`
+-- Дамп данных таблицы `user`
 --
-ALTER TABLE `composition`
-  MODIFY `composition_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
---
--- AUTO_INCREMENT для таблицы `team`
---
-ALTER TABLE `team`
-  MODIFY `team_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+INSERT INTO `user` (`user_id`, `username`, `login`, `password`, `token`) VALUES
+(1, 'admin', 'admin', '$1$1mco9Bb4$1V6PwrBWjLiUy6sJ6IVg.0', '');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

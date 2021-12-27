@@ -14,6 +14,9 @@
 		";
 	}
 	echo "</table>";
-	
+ 	
+ 	if($auth) echo "You are logged in";
+ 	else echo "You are not authorized";
+
 	include "footer.php";
 ?>

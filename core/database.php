@@ -20,7 +20,6 @@ class Database {
 	// Connection to base
 	function __construct($dbhost, $dbuser, $dbpass, $dbname) {
 		if($dbhost == "" || $dbuser == "" || $dbname == "") return;
-
 		$this->connect = null;
 		$this->connect = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
 		$this->connect->set_charset("utf8");
@@ -32,7 +31,7 @@ class Database {
 
 	// Transaction
 	public function transaction($sql_array) {
-		if(!$this->access) return $this->connect_error();
+		$this->check_connect();
 		try {
 			$this->connect->beginTransaction();
 			foreach ($sql_array as $key => $sql)
@@ -46,23 +45,23 @@ class Database {
 
 	// Executing sql query
 	public function query($sql) {
-		if(!$this->access) return $this->connect_error();
+		$this->check_connect();
 		$result = $this->connect->query($sql);
 		return $result;
 	}
 
+	// Fluid interface
 	// Executing a request with further actions
 	public function result($sql) {
-		if(!$this->access) return $this->connect_error();
+		$this->check_connect();
 		$this->result = $this->connect->query($sql);
 		$this->result_state = true;
 		return $this;
 	}
-
-	// Fluid interface
+	
 	// Table
 	public function table($table) {
-		if(!$this->access) return $this->connect_error();
+		$this->check_connect();
 		$this->table = "`$table`";
 		$this->table_state = true;
 		$this->where_state = false;
@@ -72,7 +71,7 @@ class Database {
 
 	// Selecting a table by attribute
 	public function where($field, $condition, $value="") {
-		if(!$this->access) return $this->connect_error();
+		$this->check_connect();
 		$where = ($value == "") ? sprintf("= '%s'", $condition) : sprintf("%s '%s'", $condition, $value);
 		$this->where = sprintf("WHERE `%s` %s", $field, $where);
 		$this->where_state = true;
@@ -81,7 +80,7 @@ class Database {
 
 	// Additional condition
 	public function andWhere($field, $condition, $value="") {
-		if(!$this->access) return $this->connect_error();
+		$this->check_connect();
 		if ($this->where_state) {
 			$where = ($value == "") ? sprintf("= '%s'", $condition) : sprintf("%s '%s'", $condition, $value);
 			$this->where .= sprintf(" AND `%s` %s", $field, $where);
@@ -90,7 +89,7 @@ class Database {
 
 	// Additional condition
 	public function orWhere($field, $condition, $value) {
-		if(!$this->access) return $this->connect_error();
+		$this->check_connect();
 		if ($this->where_state) {
 			$where = ($value == "") ? sprintf("= '%s'", $condition) : sprintf("%s '%s'", $condition, $value);
 			$this->where .= sprintf(" OR `%s` %s", $field, $where);
@@ -99,7 +98,7 @@ class Database {
 
 	// Selecting the fields you want
 	public function select($fields) {
-		if(!$this->access) return $this->connect_error();
+		$this->check_connect();
 		$string = ""; $counter = 0;
 		foreach($fields as $val) {
 			if($counter == count($fields) - 1)
@@ -114,7 +113,7 @@ class Database {
 
 	// Order by
 	public function orderBy($value, $type) {
-		if(!$this->access) return $this->connect_error();
+		$this->check_connect();
 		$this->orderby = sprintf("ORDER BY `%s` %s", $value, $type);
 		$this->orderby_state = true;
 		return $this;
@@ -122,7 +121,7 @@ class Database {
 
 	// Get data
 	public function get() {
-		if(!$this->access) return $this->connect_error();
+		$this->check_connect();
 		if (!$this->result_state) {
 			$table = ($this->table_state) ? $this->table : ""; $this->table_state = false;
 			$where = ($this->where_state) ? $this->where : ""; $this->where_state = false;
@@ -139,7 +138,7 @@ class Database {
 
 	// Get first data
 	public function first() {
-		if(!$this->access) return $this->connect_error();
+		$this->check_connect();
 		if (!$this->result_state) {
 			$table = ($this->table_state) ? $this->table : ""; $this->table_state = false;
 			$where = ($this->where_state) ? $this->where : ""; $this->where_state = false;
@@ -153,7 +152,7 @@ class Database {
 
 	// Insert data
 	public function insert($array) {
-		if(!$this->access) return $this->connect_error();
+		$this->check_connect();
 		$keys = "";
 		$values = "";
 		$counter = 0;
@@ -174,14 +173,14 @@ class Database {
 
 	// Adding data with return ID
 	public function insert_id($array) {
-		if(!$this->access) return $this->connect_error();
+		$this->check_connect();
 		if ($this->insert($array)) return $this->connect->insert_id;
 		else return false;
 	}
 
 	// Update data
 	public function update($array) {
-		if(!$this->access) return $this->connect_error();
+		$this->check_connect();
 		$string = "";
 		$counter = 0;
 		foreach($array as $key => $val) {
@@ -197,7 +196,7 @@ class Database {
 
 	// Delete data
 	public function delete() {
-		if(!$this->access) return $this->connect_error();
+		$this->check_connect();
 		$query = sprintf("DELETE FROM %s %s", $this->table, $this->where);
 		if(!$this->query($query)) return false;
 		else return true;
@@ -205,15 +204,14 @@ class Database {
 
 	// Error output
 	public function error() {
-		if(!$this->access) return $this->connect_error();
+		$this->check_connect();
 		return $this->connect->error;
 	}
 
-	// Connect error
-	public function connect_error() {
-		if(!$this->access) {
+	// Check connect
+	private function check_connect() {
+		if(!$this->access)
 			die("Connection error: There is no data to connect to the database");
-		}
 	}
 }
 ?>

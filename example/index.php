@@ -1,12 +1,13 @@
 <?php
-	// Constants
-	define('APP_ROOT', $_SERVER['DOCUMENT_ROOT'] . '/');
-	define('APP_DOMEN', $_SERVER['REQUEST_SCHEME']. '://' .$_SERVER['HTTP_HOST'] . '/');
-
+	session_start();
+	
 	// Headers
 	header("Access-Control-Allow-Origin: *");
 
-	// Include include
+	// Include constants
+	include "config.php";
+
+	// Include include (ha-ha, classic)
 	include "core/helpers/include.php";
 
 	// Core and helpers include
@@ -18,14 +19,8 @@
 	// Include class Controller
 	include "controllers/Controller.php";
 
-	// Others include
+	// Include routes
 	include "routes.php";
-
-	// Data for connecting to the base
-	define("HOST", 		"localhost");
-	define("USERNAME", 	"root");
-	define("PASSWORD", 	"root");
-	define("DBNAME", 	"music");
 
 	// Server
 	$server = new Server();

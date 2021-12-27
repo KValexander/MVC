@@ -4,8 +4,13 @@ class Validator {
 	private $db;
 
 	// Constructor
-	function __construct($db) {
-		$this->db = $db;
+	function __construct() {
+		$this->db = new Database(DBHOST, DBUSERNAME, DBPASSWORD, DBNAME);
+	}
+
+	// Destructor
+	function __destruct() {
+		unset($db);
 	}
 
 	// Validate data
@@ -27,7 +32,7 @@ class Validator {
 				switch ($val) {
 					// Required
 					case "required":
-						if ($data[$key] === "" || $data[$key] == NULL)
+						if ($data[$key] === "" || $data[$key] === NULL)
 							$errors->errors[$key] = "Поле не должно быть пустым";
 						break;
 						

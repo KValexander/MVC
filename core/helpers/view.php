@@ -3,13 +3,21 @@
 function view($view, $args=[]) {
 
 	// Checking for file existence
-	if(!file_exists("views/".$view.".php"))
+	if(!file_exists("public/views/".$view.".php"))
 		return print("File ". $view .".php doesn't exists");
 
 	// Converting an array to variables
-	foreach($args as $key => $val)
+	view_share($args);
+	foreach($GLOBALS["view_views_args"] as $key => $val)
 		${$key} = $val;
 
 	// Connecting a view
-	include "views/".$view.".php";
+	include "public/views/".$view.".php";
+}
+
+// Passing data to a view
+function view_share($args) {
+	global $view_views_args;
+	foreach($args as $key => $val)
+		$view_views_args[$key] = $val;
 }

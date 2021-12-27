@@ -9,7 +9,7 @@ class Model {
 
 	// Constructor
 	function __construct() {
-		$this->db = new Database(HOST, USERNAME, PASSWORD, DBNAME);
+		$this->db = new Database(DBHOST, DBUSERNAME, DBPASSWORD, DBNAME);
 	}
 
 	// Set id

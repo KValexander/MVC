@@ -1,5 +1,5 @@
 // Root directory
-const root = "views/app/";
+const root = "public/app/";
 window.onload = () => {
 	app.html.app = document.getElementById("app");
 	app.html.other = document.getElementById("other");

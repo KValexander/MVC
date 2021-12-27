@@ -1,12 +1,11 @@
 <?php
+// Main controller
 class MainController extends Controller {
 
 	// Main page
 	public function main_page() {
 		$team = new TeamModel();
 		$id = 1;
-
-		var_dump($this->validator);
 
 		// Set id
 		$team->set_id($id);
@@ -40,6 +39,7 @@ class MainController extends Controller {
 		// ], $id); if(!$update) echo DB::$connect->error;
 		]); if(!$update) echo $team->error();
 
+		view_share(["auth" => $this->auth->check()]);
 		// Calling the view and passing all the table data to it
 		return view("index", ["data" => $team->all()]);
 	}

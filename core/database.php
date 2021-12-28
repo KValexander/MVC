@@ -18,8 +18,8 @@ class Database {
 	private $orderby_state = false;
 
 	// Connection to base
-	function __construct($dbhost, $dbuser, $dbpass, $dbname) {
-		if($dbhost == "" || $dbuser == "" || $dbname == "") return;
+	function __construct($dbhost=NULL, $dbuser=NULL, $dbpass=NULL, $dbname=NULL) {
+		if($dbhost == NULL || $dbuser == NULL || $dbname == NULL) return;
 		$this->connect = null;
 		$this->connect = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
 		$this->connect->set_charset("utf8");

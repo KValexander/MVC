@@ -8,8 +8,10 @@ class Model {
 	private $id;
 
 	// Constructor
-	function __construct() {
-		$this->db = new Database(DBHOST, DBUSERNAME, DBPASSWORD, DBNAME);
+	function __construct($dbhost=NULL, $dbuser=NULL, $dbpass=NULL, $dbname=NULL) {
+		if($dbhost == NULL || $dbuser == NULL || $dbname == NULL)
+			$this->db = new Database(DBHOST, DBUSERNAME, DBPASSWORD, DBNAME);
+		else $this->db = new Database($dbhost, $dbuser, $dbpass, $dbname);
 	}
 
 	// Set id

@@ -1,6 +1,6 @@
 <?php
-// Parent class of controllers
-class Controller {
+// Parent class of middlewares
+class Middleware {
 	protected $db;
 	protected $auth;
 	protected $request;

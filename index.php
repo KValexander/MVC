@@ -19,6 +19,9 @@
 	// Include class Controller
 	include "controllers/Controller.php";
 
+	// Include class Middleware
+	include "middlewares/Middleware.php";
+
 	// Include routes
 	include "routes.php";
 
